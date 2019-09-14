@@ -5,12 +5,18 @@ public class Bone implements Comparable<Bone> {
     private int pipsOnSecondHalf;
     private boolean isDouble;
 
+    public Bone(int pipsOnFirstHalf, int pipsOnSecondHalf) {
+        this.pipsOnFirstHalf = pipsOnFirstHalf;
+        this.pipsOnSecondHalf = pipsOnSecondHalf;
+        this.isDouble = pipsOnFirstHalf==pipsOnSecondHalf;
+    }
+
     //первая больше чем вторая. Здешняя больше чем о
     public int compareTo(Bone o) {
 
         if(isDouble && o.isDouble()){
             if(pipsOnFirstHalf != 0 && o.getPipsOnFirstHalf() != 0){
-                return pipsOnFirstHalf - o.getPipsOnFirstHalf();
+                return o.getPipsOnFirstHalf() - pipsOnFirstHalf;
             }else if(pipsOnFirstHalf == 0){
                 return -1;
             }else{
@@ -54,4 +60,8 @@ public class Bone implements Comparable<Bone> {
         isDouble = aDouble;
     }
 
+    @Override
+    public String toString() {
+        return " " + pipsOnFirstHalf + " " + pipsOnSecondHalf;
+    }
 }
