@@ -1,23 +1,52 @@
 package ru.proskurEgor.core;
 
 import ru.proskurEgor.data.Bone;
+import ru.proskurEgor.data.OrderedBones;
 
-public class Market extends BoneSet {
+import java.util.LinkedList;
+import java.util.Random;
+
+public class Market{
+
+    private LinkedList<Bone> market;
+    private Random rnd = new Random();
 
     public Market() {
-        fillMarket();
+        market = new LinkedList<>(OrderedBones.getAllBones());
+        randomSort();
     }
 
     public Bone getRandomBone(){
-        return bones.get(rnd.nextInt(bones.size()));
+        int index = rnd.nextInt(market.size());
+        Bone bone = market.get(index);
+        market.remove(index);
+        return bone;
     }
 
-    public void fillMarket(){
-        for(int i = 0; i <= 6; i++){
-            for(int j = i; j <= 6; j++){
-                bones.add(new Bone(i, j));
-            }
+    public Bone getBone(){
+        return market.poll();
+    }
+
+    public boolean isEmpty(){
+        return market.isEmpty();
+    }
+
+    public int size(){
+        return market.size();
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for(Bone bone: market){
+            sb.append(bone.toString());
+            sb.append(" ");
         }
+        return sb.toString();
+    }
+
+    public void randomSort(){
+        market.sort((a, b) -> rnd.nextInt(2)*2-1);
     }
 
 }
