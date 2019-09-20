@@ -1,27 +1,33 @@
 package ru.proskurEgor.data;
+/*
+набор остортированных костяшек
+ */
+
+import ru.proskurEgor.utils.DominoesUtils;
 
 import java.util.LinkedList;
-import java.util.List;
 
 public class OrderedBones {
 
-    private List<Bone> allBones = new LinkedList<>();
+    private static LinkedList<Bone> allBones = fillMarker();
 
-    {
+    private static LinkedList<Bone> fillMarker(){
+        LinkedList<Bone> bones = new LinkedList<>();
+
         for(int i = 1; i <= 6; i++){
-            allBones.add(new Bone(i, i));
+            bones.add(new Bone(DominoesUtils.getSimilarNumber(i), DominoesUtils.getSimilarNumber(i)));
         }
-        allBones.add(new Bone(0,0));
+        bones.add(new Bone(BoneNumbers.ZERO, BoneNumbers.ZERO));
         for(int i = 6; i >=0; i--){
             for(int j = i-1; j >= 0; j--){
-                allBones.add(new Bone(i,j));
+                bones.add(new Bone(DominoesUtils.getSimilarNumber(i), DominoesUtils.getSimilarNumber(j)));
             }
         }
+        return bones;
     }
 
-    public List<Bone> getAllBones(){
+    public static LinkedList<Bone> getAllBones(){
         return allBones;
     }
-
 
 }
