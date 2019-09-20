@@ -1,6 +1,12 @@
-package MainPackage;
+package ru.proskurEgor.core;
+
+import ru.proskurEgor.data.Bone;
 
 public class Market extends BoneSet {
+
+    public Market() {
+        fillMarket();
+    }
 
     public Bone getRandomBone(){
         return bones.get(rnd.nextInt(bones.size()));

@@ -1,4 +1,6 @@
-package MainPackage;
+package ru.proskurEgor.core;
+
+import ru.proskurEgor.data.Bone;
 
 import java.util.LinkedList;
 import java.util.List;

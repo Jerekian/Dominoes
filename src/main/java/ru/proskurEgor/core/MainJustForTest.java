@@ -1,12 +1,10 @@
-package MainPackage;
+package ru.proskurEgor.core;
 
 public class MainJustForTest {
 
     public static void main(String[] args) {
 
         Market market = new Market();
-
-        market.fillMarket();
 
         System.out.println(market.toString());
         market.randomSort();

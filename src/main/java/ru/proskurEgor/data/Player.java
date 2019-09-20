@@ -1,4 +1,6 @@
-package MainPackage;
+package ru.proskurEgor.data;
+
+import ru.proskurEgor.core.BoneSet;
 
 public class Player {
 
