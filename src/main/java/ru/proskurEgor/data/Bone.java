@@ -1,17 +1,50 @@
 package ru.proskurEgor.data;
+/*
+класс описывающий одну костяшку
+ */
+public class Bone {
 
-public class Bone implements Comparable<Bone> {
-
-    private int pipsOnFirstHalf;
-    private int pipsOnSecondHalf;
+    private BoneNumbers pipsOnFirstHalf;
+    private BoneNumbers pipsOnSecondHalf;
     private boolean isDouble;
 
-    public Bone(int pipsOnFirstHalf, int pipsOnSecondHalf) {
+    public Bone(BoneNumbers pipsOnFirstHalf, BoneNumbers pipsOnSecondHalf) {
         this.pipsOnFirstHalf = pipsOnFirstHalf;
         this.pipsOnSecondHalf = pipsOnSecondHalf;
-        this.isDouble = pipsOnFirstHalf==pipsOnSecondHalf;
+        this.isDouble = pipsOnFirstHalf == pipsOnSecondHalf;
     }
 
+    @Override
+    public String toString() {
+        return "(" + pipsOnFirstHalf +
+                "|" + pipsOnSecondHalf + ")";
+    }
+
+    public BoneNumbers getPipsOnFirstHalf() {
+        return pipsOnFirstHalf;
+    }
+
+    public void setPipsOnFirstHalf(BoneNumbers pipsOnFirstHalf) {
+        this.pipsOnFirstHalf = pipsOnFirstHalf;
+    }
+
+    public BoneNumbers getPipsOnSecondHalf() {
+        return pipsOnSecondHalf;
+    }
+
+    public void setPipsOnSecondHalf(BoneNumbers pipsOnSecondHalf) {
+        this.pipsOnSecondHalf = pipsOnSecondHalf;
+    }
+
+    public boolean isDouble() {
+        return isDouble;
+    }
+
+    public void setDouble(boolean aDouble) {
+        isDouble = aDouble;
+    }
+
+    /*
     //первая больше чем вторая. Здешняя больше чем о
     public int compareTo(Bone o) {
 
@@ -36,33 +69,6 @@ public class Bone implements Comparable<Bone> {
                     Math.max(o.getPipsOnFirstHalf(), o.getPipsOnSecondHalf());
         }
     }
+ */
 
-    public int getPipsOnFirstHalf() {
-        return pipsOnFirstHalf;
-    }
-
-    public void setPipsOnFirstHalf(int pipsOnFirstHalf) {
-        this.pipsOnFirstHalf = pipsOnFirstHalf;
-    }
-
-    public int getPipsOnSecondHalf() {
-        return pipsOnSecondHalf;
-    }
-
-    public void setPipsOnSecondHalf(int pipsOnSecondHalf) {
-        this.pipsOnSecondHalf = pipsOnSecondHalf;
-    }
-
-    public boolean isDouble() {
-        return isDouble;
-    }
-
-    public void setDouble(boolean aDouble) {
-        isDouble = aDouble;
-    }
-
-    @Override
-    public String toString() {
-        return " " + pipsOnFirstHalf + " " + pipsOnSecondHalf;
-    }
 }
