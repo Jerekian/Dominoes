@@ -2,14 +2,18 @@ package ru.proskurEgor.core;
 
 import ru.proskurEgor.data.Bone;
 
-public class PlayingField extends BoneSet{
+import java.util.LinkedList;
+
+public class PlayingField{
+
+    private LinkedList<Bone> playingField = new LinkedList<>();
 
     public void addFirst(Bone bone){
-        bones.addFirst(bone);
+        playingField.addFirst(bone);
     }
 
     public void addLast(Bone bone){
-        bones.addLast(bone);
+        playingField.addLast(bone);
     }
 
 
