@@ -1,5 +1,7 @@
 package ru.proskurEgor.core;
-
+/*
+набор костящек игрока
+ */
 import ru.proskurEgor.data.Bone;
 
 import java.util.LinkedList;
@@ -8,11 +10,16 @@ import java.util.Random;
 
 public class BoneSet {
 
-    protected Random rnd = new Random();
     protected LinkedList<Bone> bones = new LinkedList<>();
 
     public Bone pollLastBone(){
         return bones.pollLast();
+    }
+
+    public Bone pollBone(int index){
+        Bone bone = bones.get(index);
+        bones.remove(index);
+        return bone;
     }
 
     public void addBone(Bone bone){
@@ -25,14 +32,6 @@ public class BoneSet {
 
     public List<Bone> getAllBone(){
         return bones;
-    }
-
-    public void randomSort(){
-        bones.sort((a, b) -> rnd.nextInt(2)*2-1);
-    }
-
-    public void ascendingSort(){
-        bones.sort(Bone::compareTo);
     }
 
     @Override
