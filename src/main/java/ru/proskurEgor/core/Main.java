@@ -18,7 +18,7 @@ public class Main {
         gameState.firstMove();
         System.out.println(DominoesUtils.listToString(gameState.getPlayingField()));
 
-
+        gameState.game();
     }
 
 }

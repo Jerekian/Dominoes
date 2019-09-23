@@ -13,11 +13,21 @@ public class PlayingField{
     }
 
     public void addFirst(Bone bone){
-        playingField.addFirst(bone);
+        if(playingField.size() == 0 ||
+                bone.getPipsOnSecondHalf() == playingField.getFirst().getPipsOnFirstHalf()){
+            playingField.addFirst(bone);
+        }else{
+            playingField.addFirst(new Bone(bone.getPipsOnSecondHalf(), bone.getPipsOnFirstHalf()));
+        }
     }
 
     public void addLast(Bone bone){
-        playingField.addLast(bone);
+        if(playingField.size() == 0 ||
+                bone.getPipsOnFirstHalf() == playingField.getLast().getPipsOnSecondHalf()){
+            playingField.addLast(bone);
+        }else{
+            playingField.addLast(new Bone(bone.getPipsOnSecondHalf(), bone.getPipsOnFirstHalf()));
+        }
     }
 
     public Bone getFirst(){
