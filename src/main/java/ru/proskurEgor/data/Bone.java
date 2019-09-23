@@ -20,6 +20,27 @@ public class Bone {
                 "|" + pipsOnSecondHalf + ")";
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Bone)) return false;
+
+        Bone bone = (Bone) o;
+
+        if (isDouble() != bone.isDouble()) return false;
+        if (getPipsOnFirstHalf() != bone.getPipsOnFirstHalf()) return false;
+        return getPipsOnSecondHalf() == bone.getPipsOnSecondHalf();
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = getPipsOnFirstHalf().hashCode();
+        result = 31 * result + getPipsOnSecondHalf().hashCode();
+        result = 31 * result + (isDouble() ? 1 : 0);
+        return result;
+    }
+
     public BoneNumbers getPipsOnFirstHalf() {
         return pipsOnFirstHalf;
     }
