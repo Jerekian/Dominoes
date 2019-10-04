@@ -8,6 +8,7 @@ package ru.proskurEgor.utils;
              по ним ищем у кого самая приоритетная и даем тому преимущество в ходу
  */
 
+import org.apache.commons.lang3.StringUtils;
 import ru.proskurEgor.data.Bone;
 import ru.proskurEgor.data.BoneNumbers;
 
@@ -34,6 +35,7 @@ public class DominoesUtils {
             sb.append(bone.toString());
             sb.append(" ");
         }
+
         return sb.toString();
     }
 
