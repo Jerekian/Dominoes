@@ -12,7 +12,7 @@ public class GameState {
     private int numberOfPlayers;
     private Market market;
     private Player[] players;
-    private PlayingField playingField = new PlayingField();
+    private PlayingField playingField;
     private int activePlayer = -1;
     private boolean haveMove;
     private boolean haveWinner = false;
@@ -28,11 +28,9 @@ public class GameState {
     public void startGame(){
 
         for(int i = 0; i < players.length; i++){
-            players[i] = new Player("Player_" + (i+1));
-            for(int j = 0; j < 7; j++){
-                players[i].addBone(market.getBone());
-            }
+            players[i] = new Player("Player_" + (i+1), market.getStartBonePack());
         }
+
     }
 
     public LinkedList<Bone> getPlayingField(){
@@ -40,8 +38,8 @@ public class GameState {
     }
 
     public void firstMove(){
-        for(int i = 0; i < OrderedBones.getAllBones().size(); i++){
-            Bone bone = OrderedBones.getAllBones().get(i);
+        for(int i = 0; i < OrderedBones.size(); i++){
+            Bone bone = OrderedBones.getBone(i);
             for(int j = 0; j < players.length; j++){
                 if(players[j].isContains(bone)){
                     activePlayer = j;
@@ -95,13 +93,20 @@ public class GameState {
 
     public void game(){
         checkMove();
-        for(int i = (activePlayer++)/numberOfPlayers; haveMove && !haveWinner; i = i==numberOfPlayers-1?0:i+1) {
 
-            nextMove(players[i]);
+        do{
+            activePlayer++;
+            activePlayer = activePlayer%numberOfPlayers;
+            System.out.println(players[activePlayer].getName() + ": ");
+            System.out.println(DominoesUtils.listToString(players[activePlayer].getAllBone()));
+            nextMove(players[activePlayer]);
+
+            System.out.println("Playing Field: ");
             System.out.println(DominoesUtils.listToString(playingField.getPlayingField()));
             checkMove();
-            checkWinner(players[i]);
+            checkWinner(players[activePlayer]);
         }
+        while(haveMove && !haveWinner);
 
         if(winner == null) checkWinner();
 
@@ -116,15 +121,15 @@ public class GameState {
     }
 
     private void nextMove(Player player){
-        int index = player.boneSearch(playingField.getLast().getPipsOnSecondHalf());
-        if (index != -1) {
-            playingField.addLast(player.pollBone(index));
+        Bone bone = player.boneSearch(playingField.getLast().getPipsOnSecondHalf());
+        if (bone != null) {
+            playingField.addLast(bone);
             return;
         }
 
-        index = player.boneSearch(playingField.getFirst().getPipsOnFirstHalf());
-        if (index != -1){
-            playingField.addFirst(player.pollBone(index));
+        bone = player.boneSearch(playingField.getFirst().getPipsOnFirstHalf());
+        if (bone != null){
+            playingField.addFirst(bone);
             return;
         }
 

@@ -9,6 +9,11 @@ public class Player {
     private String name;
     private LinkedList<Bone> bones;
 
+    public Player(String name, List<Bone> list) {
+        this.name = name;
+        this.bones = new LinkedList<>(list);
+    }
+
     public Player(String name) {
         this.name = name;
         this.bones = new LinkedList<>();
@@ -30,6 +35,10 @@ public class Player {
 
     public void addBone(Bone bone) {
         bones.add(bone);
+    }
+
+    public void addStartBonePack(List bones){
+        bones.addAll(bones);
     }
 
     public boolean checkBoneForMove(BoneNumbers boneNumbers) {
@@ -54,14 +63,14 @@ public class Player {
         return bones.contains(bone);
     }
 
-    public int boneSearch(BoneNumbers boneNumbers) {
+    public Bone boneSearch(BoneNumbers boneNumbers) {
         for (int i = 0; i < bones.size(); i++) {
             if(bones.get(i).getPipsOnFirstHalf() == boneNumbers ||
                     bones.get(i).getPipsOnSecondHalf() == boneNumbers){
-                return i;
+                return pollBone(i);
             }
         }
-        return -1;
+        return null;
     }
 
     @Override

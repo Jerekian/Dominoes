@@ -26,5 +26,11 @@ public class OrderedBones {
     public static LinkedList<Bone> getAllBones(){
         return allBones;
     }
+    public static Bone getBone(int index){
+        return allBones.get(index);
+    }
+    public static int size(){
+        return allBones.size();
+    }
 
 }

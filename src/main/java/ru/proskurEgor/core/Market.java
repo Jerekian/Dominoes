@@ -4,7 +4,9 @@ import ru.proskurEgor.data.Bone;
 import ru.proskurEgor.data.OrderedBones;
 
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 public class Market{
 
@@ -25,6 +27,12 @@ public class Market{
 
     public Bone getBone(){
         return market.poll();
+    }
+
+    public List<Bone> getStartBonePack(){
+        List<Bone> startBoneList = market.stream().limit(7).collect(Collectors.toList());
+        market.removeAll(startBoneList);
+        return startBoneList;
     }
 
     public boolean isEmpty(){
