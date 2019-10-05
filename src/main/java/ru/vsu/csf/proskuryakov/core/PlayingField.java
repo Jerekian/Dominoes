@@ -1,6 +1,6 @@
-package ru.proskurEgor.core;
+package ru.vsu.csf.proskuryakov.core;
 
-import ru.proskurEgor.data.Bone;
+import ru.vsu.csf.proskuryakov.data.Bone;
 
 import java.util.LinkedList;
 

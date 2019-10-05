@@ -1,6 +1,6 @@
-package ru.proskurEgor.core;
+package ru.vsu.csf.proskuryakov.core;
 
-import ru.proskurEgor.utils.DominoesUtils;
+import ru.vsu.csf.proskuryakov.utils.DominoesUtils;
 
 import java.util.Scanner;
 

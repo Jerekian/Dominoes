@@ -1,7 +1,7 @@
-package ru.proskurEgor.core;
+package ru.vsu.csf.proskuryakov.core;
 
-import ru.proskurEgor.data.OrderedBones;
-import ru.proskurEgor.utils.DominoesUtils;
+import ru.vsu.csf.proskuryakov.data.OrderedBones;
+import ru.vsu.csf.proskuryakov.utils.DominoesUtils;
 
 public class MainJustForTest {
 

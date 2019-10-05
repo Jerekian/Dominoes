@@ -1,4 +1,4 @@
-package ru.proskurEgor.utils;
+package ru.vsu.csf.proskuryakov.utils;
 
 /*
 в этом классе будут реализованы утилиты
@@ -8,9 +8,8 @@ package ru.proskurEgor.utils;
              по ним ищем у кого самая приоритетная и даем тому преимущество в ходу
  */
 
-import org.apache.commons.lang3.StringUtils;
-import ru.proskurEgor.data.Bone;
-import ru.proskurEgor.data.BoneNumbers;
+import ru.vsu.csf.proskuryakov.data.Bone;
+import ru.vsu.csf.proskuryakov.data.BoneNumbers;
 
 import java.util.List;
 

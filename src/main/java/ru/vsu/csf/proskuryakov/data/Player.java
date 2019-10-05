@@ -1,4 +1,4 @@
-package ru.proskurEgor.data;
+package ru.vsu.csf.proskuryakov.data;
 
 import java.util.LinkedList;
 import java.util.List;

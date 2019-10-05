@@ -1,9 +1,9 @@
-package ru.proskurEgor.core;
+package ru.vsu.csf.proskuryakov.core;
 
-import ru.proskurEgor.data.Bone;
-import ru.proskurEgor.data.OrderedBones;
-import ru.proskurEgor.data.Player;
-import ru.proskurEgor.utils.DominoesUtils;
+import ru.vsu.csf.proskuryakov.data.Bone;
+import ru.vsu.csf.proskuryakov.data.OrderedBones;
+import ru.vsu.csf.proskuryakov.data.Player;
+import ru.vsu.csf.proskuryakov.utils.DominoesUtils;
 
 import java.util.LinkedList;
 
@@ -97,12 +97,16 @@ public class GameState {
         do{
             activePlayer++;
             activePlayer = activePlayer%numberOfPlayers;
-            System.out.println(players[activePlayer].getName() + ": ");
-            System.out.println(DominoesUtils.listToString(players[activePlayer].getAllBone()));
-            nextMove(players[activePlayer]);
+
+            do{
+                System.out.println(players[activePlayer].getName() + ": ");
+                System.out.println(DominoesUtils.listToString(players[activePlayer].getAllBone()));
+            }
+            while(!nextMove(players[activePlayer]));
 
             System.out.println("Playing Field: ");
             System.out.println(DominoesUtils.listToString(playingField.getPlayingField()));
+            System.out.println();
             checkMove();
             checkWinner(players[activePlayer]);
         }
@@ -120,25 +124,25 @@ public class GameState {
         }
     }
 
-    private void nextMove(Player player){
+    private boolean nextMove(Player player){
         Bone bone = player.boneSearch(playingField.getLast().getPipsOnSecondHalf());
         if (bone != null) {
             playingField.addLast(bone);
-            return;
+            return true;
         }
 
         bone = player.boneSearch(playingField.getFirst().getPipsOnFirstHalf());
         if (bone != null){
             playingField.addFirst(bone);
-            return;
+            return true;
         }
 
         if(market.size() == 0){
             haveMove = false;
-            return;
+            return false;
         }
         player.addBone(market.getBone());
-        nextMove(player);
+        return false;
     }
 
 }

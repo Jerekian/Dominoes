@@ -1,4 +1,4 @@
-package ru.proskurEgor.data;
+package ru.vsu.csf.proskuryakov.data;
 
 public enum  BoneNumbers {
     ZERO,
