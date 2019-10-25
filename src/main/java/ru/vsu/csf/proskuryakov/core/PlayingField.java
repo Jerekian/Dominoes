@@ -3,6 +3,7 @@ package ru.vsu.csf.proskuryakov.core;
 import ru.vsu.csf.proskuryakov.data.Bone;
 
 import java.util.LinkedList;
+import java.util.List;
 
 public class PlayingField{
 
@@ -38,7 +39,7 @@ public class PlayingField{
         return playingField.getLast();
     }
 
-    public LinkedList<Bone> getPlayingField() {
+    public List<Bone> getPlayingField() {
         return playingField;
     }
 }

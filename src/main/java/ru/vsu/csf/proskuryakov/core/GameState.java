@@ -6,6 +6,7 @@ import ru.vsu.csf.proskuryakov.data.Player;
 import ru.vsu.csf.proskuryakov.utils.DominoesUtils;
 
 import java.util.LinkedList;
+import java.util.List;
 
 public class GameState {
 
@@ -33,8 +34,12 @@ public class GameState {
 
     }
 
-    public LinkedList<Bone> getPlayingField(){
+    public List<Bone> getListPlayingField(){
         return playingField.getPlayingField();
+    }
+
+    public PlayingField getPlayingField(){
+        return playingField;
     }
 
     public void firstMove(){
