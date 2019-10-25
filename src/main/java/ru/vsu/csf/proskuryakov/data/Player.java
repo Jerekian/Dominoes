@@ -84,7 +84,6 @@ public class Player {
         return sb.toString();
     }
 
-
     public String getName() {
         return name;
     }

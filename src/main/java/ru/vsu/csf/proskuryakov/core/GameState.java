@@ -16,6 +16,7 @@ public class GameState {
     private PlayingField playingField;
     private int activePlayer = -1;
     private boolean haveMove;
+    private boolean isMoveDone;
     private boolean haveWinner = false;
     private Player winner = null;
 
@@ -26,6 +27,7 @@ public class GameState {
         this.playingField = new PlayingField();
     }
 
+    //создаем игроков и заполняем их руки костяшками
     public void startGame(){
 
         for(int i = 0; i < players.length; i++){
@@ -42,6 +44,7 @@ public class GameState {
         return playingField;
     }
 
+    //начинаем игру с поиска первой по приоритету костяшки, выкладываем ее на поле и запоминаем начавшего игрока
     public void firstMove(){
         for(int i = 0; i < OrderedBones.size(); i++){
             Bone bone = OrderedBones.getBone(i);
@@ -49,13 +52,15 @@ public class GameState {
                 if(players[j].isContains(bone)){
                     activePlayer = j;
                     playingField.addFirst(players[j].pollBone(bone));
+                    isMoveDone = true;
                     return;
                 }
             }
         }
     }
 
-    private void checkMove(){
+    //если базар не пустой или у игроков есть что положить, значит продолжаем игру
+    public void checkMove(){
         if(market.size() > 0){
             haveMove = true;
             return;
@@ -90,64 +95,73 @@ public class GameState {
     }
 
     private void checkWinner(Player player){
-        if(player.getAllBone().size() == 0){
+        if(player.getAllBone().isEmpty()){
             haveWinner = true;
             winner = player;
         }
     }
 
     public void game(){
-        checkMove();
 
-        do{
-            activePlayer++;
-            activePlayer = activePlayer%numberOfPlayers;
-
-            do{
-                System.out.println(players[activePlayer].getName() + ": ");
-                System.out.println(DominoesUtils.listToString(players[activePlayer].getAllBone()));
-            }
-            while(!nextMove(players[activePlayer]));
-
-            System.out.println("Playing Field: ");
-            System.out.println(DominoesUtils.listToString(playingField.getPlayingField()));
-            System.out.println();
+        try {
             checkMove();
-            checkWinner(players[activePlayer]);
-        }
-        while(haveMove && !haveWinner);
+            while(true) nextMove();
+        }catch (Error error){
 
-        if(winner == null) checkWinner();
-
-        System.out.println("Игра окончена");
-        System.out.println("Победитель: " + winner.getName());
-        System.out.println(DominoesUtils.listToString(playingField.getPlayingField()));
-        for (int i = 0; i < players.length; i++){
-            System.out.println(players[i].getName());
-            System.out.println(DominoesUtils.listToString(players[i].getAllBone()));
-            System.out.println("------------");
         }
+
     }
 
-    private boolean nextMove(Player player){
+
+    public void nextMove() throws Error{
+
+        if(haveMove && !haveWinner){
+            if(isMoveDone){
+                activePlayer++;
+                activePlayer = activePlayer%numberOfPlayers;
+                isMoveDone = false;
+            }
+
+            nextMove(players[activePlayer]);
+            checkMove();
+            checkWinner(players[activePlayer]);
+        }else{
+            if(winner == null) checkWinner();
+            throw new Error("Хода нет");
+        }
+
+    }
+
+    private void nextMove(Player player){
         Bone bone = player.boneSearch(playingField.getLast().getPipsOnSecondHalf());
         if (bone != null) {
             playingField.addLast(bone);
-            return true;
+            isMoveDone = true;
+            return;
         }
 
         bone = player.boneSearch(playingField.getFirst().getPipsOnFirstHalf());
         if (bone != null){
             playingField.addFirst(bone);
-            return true;
+            isMoveDone = true;
+            return;
         }
 
         if(market.size() == 0){
             haveMove = false;
-            return false;
+            isMoveDone = false;
+            return;
         }
+
         player.addBone(market.getBone());
-        return false;
+        isMoveDone = false;
     }
 
+    public Player[] getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(Player[] players) {
+        this.players = players;
+    }
 }
