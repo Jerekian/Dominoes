@@ -164,4 +164,10 @@ public class GameState {
     public void setPlayers(Player[] players) {
         this.players = players;
     }
+
+    public String getWinnerName(){
+        if(winner == null) checkWinner();
+        return winner.getName();
+    }
+
 }

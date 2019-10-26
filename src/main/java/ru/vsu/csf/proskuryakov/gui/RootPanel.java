@@ -1,16 +1,9 @@
 package ru.vsu.csf.proskuryakov.gui;
 
-import javafx.collections.ObservableList;
 import javafx.geometry.Pos;
-import javafx.scene.Group;
-import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.*;
-import javafx.scene.text.Text;
 import ru.vsu.csf.proskuryakov.core.GameState;
-import ru.vsu.csf.proskuryakov.core.PlayingField;
 import ru.vsu.csf.proskuryakov.data.Bone;
 
 import javax.swing.*;
@@ -83,7 +76,7 @@ public class RootPanel{
         try {
             gameState.nextMove();
         }catch (Error e){
-            System.out.println("ОШИБКА блять");
+            InformationWindow.draw("Win", "Победитель: " + gameState.getWinnerName());
         }
         fillPlayerOneBox(gameState);
         fillPlayerTwoBox(gameState);
