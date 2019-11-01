@@ -111,16 +111,20 @@ public class RootPanel{
             System.out.println("НЕ МОГУ СЛЕДУЮЩИЙ ХОД СДЕЛАТЬ");
         }
 
-        fillPlayerOneBox(gameState);
-        fillPlayerTwoBox(gameState);
-        fillPlayingField(gameState);
-        fillMarket(gameState);
+        refillAllElement(gameState);
 
         if(gameState.isHaveWinner()){
             new InformationWindow("Win",
                     100, 250).display("Победитель: " + gameState.getWinnerName());
         }
 
+    }
+
+    public void refillAllElement(GameState gameState){
+        fillPlayerOneBox(gameState);
+        fillPlayerTwoBox(gameState);
+        fillPlayingField(gameState);
+        fillMarket(gameState);
     }
 
     static void closeProgram() {

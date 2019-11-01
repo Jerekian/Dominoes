@@ -23,6 +23,23 @@ public class GameState {
         this.playingField = new PlayingField();
     }
 
+    public GameState(int numberOfPlayers, Market market, Player[] players,
+                     PlayingField playingField, int activePlayer, boolean haveMove,
+                     boolean isMoveDone, boolean haveWinner, Player winner) {
+        this.numberOfPlayers = numberOfPlayers;
+        this.market = market;
+        this.players = players;
+        this.playingField = playingField;
+        this.activePlayer = activePlayer;
+        this.haveMove = haveMove;
+        this.isMoveDone = isMoveDone;
+        this.haveWinner = haveWinner;
+        this.winner = winner;
+    }
+
+    public GameState() {
+    }
+
     //создаем игроков и заполняем их руки костяшками
     public void startGame(){
 

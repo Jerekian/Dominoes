@@ -39,7 +39,10 @@ public class DominoesMenu {
         });
 
         MenuItem openGameMenuItem = new MenuItem("Open last game");
-        openGameMenuItem.setOnAction(e -> System.out.println("Open last game"));
+        openGameMenuItem.setOnAction(e -> {
+            System.out.println("Open last game");
+            GUIApplication.openLastGame();
+        });
 
         MenuItem exitMenuItem = new MenuItem("Exit");
         exitMenuItem.setOnAction(e -> {
