@@ -2,11 +2,12 @@ package ru.vsu.csf.proskuryakov.gui;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.control.Separator;
 import javafx.scene.layout.*;
 import ru.vsu.csf.proskuryakov.core.GameState;
 import ru.vsu.csf.proskuryakov.data.Bone;
-
-import javax.swing.*;
+import ru.vsu.csf.proskuryakov.gui.window.ExitWindow;
+import ru.vsu.csf.proskuryakov.gui.window.InformationWindow;
 
 public class RootPanel{
 
@@ -21,21 +22,42 @@ public class RootPanel{
     VBox center = new VBox();
     Label playingFieldLable = new Label("Playing field");
     FlowPane playingField = new FlowPane();
+    Label marketLable = new Label("Market");
+    FlowPane market = new FlowPane();
+
+
+    DominoesMenu dominoesMenu = new DominoesMenu();
 
     public RootPanel(GameState gameState) {
 
-        playerOneBox.setMinSize(100, 100);
-        playerTwoBox.setMinSize(100, 100);
-        playingField.setMinSize(200,100);
+        playerOneBox.setMinSize(100, 200);
+        playerTwoBox.setMinSize(100, 200);
+        center.setMinSize(200,200);
 
-        center.setAlignment(Pos.BASELINE_CENTER);
-        center.getChildren().addAll(playingFieldLable, playingField);
+        playingField.setAlignment(Pos.BASELINE_CENTER);
+
+        market.setAlignment(Pos.BASELINE_CENTER);
+
+        VBox topOfCenter = new VBox(playingFieldLable, playingField);
+        topOfCenter.setAlignment(Pos.CENTER);
+
+        VBox bottomOfCenter = new VBox(marketLable,market);
+        bottomOfCenter.setAlignment(Pos.CENTER);
+
+
+        center.getChildren().addAll(
+                topOfCenter,
+                new Separator(),
+                bottomOfCenter
+        );
 
         fillPlayerOneBox(gameState);
         fillPlayerTwoBox(gameState);
         fillPlayingField(gameState);
+        fillMarket(gameState);
 
         window.setMinSize(400, 200);
+        window.setTop(dominoesMenu.getMenuBar());
         window.setLeft(playerOneBox);
         window.setRight(playerTwoBox);
         window.setCenter(center);
@@ -66,21 +88,47 @@ public class RootPanel{
     void fillPlayingField(GameState gameState){
         playingField.getChildren().clear();
 
-        for(Bone bone: gameState.getListPlayingField()){
+        for(Bone bone: gameState.getPlayingFieldList()){
             playingField.getChildren().add(new Label(bone.toString()));
         }
 
     }
 
+    void fillMarket(GameState gameState){
+        market.getChildren().clear();
+
+        for(Bone bone: gameState.getMarketList()){
+            market.getChildren().add(new Label(bone.toString()));
+        }
+
+    }
+
     void nextMoveButton(GameState gameState){
+
         try {
             gameState.nextMove();
         }catch (Error e){
-            InformationWindow.draw("Win", "Победитель: " + gameState.getWinnerName());
+            System.out.println("НЕ МОГУ СЛЕДУЮЩИЙ ХОД СДЕЛАТЬ");
         }
+
         fillPlayerOneBox(gameState);
         fillPlayerTwoBox(gameState);
         fillPlayingField(gameState);
+        fillMarket(gameState);
+
+        if(gameState.isHaveWinner()){
+            new InformationWindow("Win",
+                    100, 250).display("Победитель: " + gameState.getWinnerName());
+        }
+
+    }
+
+    static void closeProgram() {
+
+        if(new ExitWindow().displayAndGetAnswer()){
+            GUIApplication.window.close();
+        }
+
     }
 
 }

@@ -35,6 +35,10 @@ public class Market{
         return startBoneList;
     }
 
+    public List<Bone> getMarketList(){
+        return market;
+    }
+
     public boolean isEmpty(){
         return market.isEmpty();
     }

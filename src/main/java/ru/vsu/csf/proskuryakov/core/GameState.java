@@ -1,11 +1,7 @@
 package ru.vsu.csf.proskuryakov.core;
 
-import ru.vsu.csf.proskuryakov.data.Bone;
-import ru.vsu.csf.proskuryakov.data.OrderedBones;
-import ru.vsu.csf.proskuryakov.data.Player;
-import ru.vsu.csf.proskuryakov.utils.DominoesUtils;
+import ru.vsu.csf.proskuryakov.data.*;
 
-import java.util.LinkedList;
 import java.util.List;
 
 public class GameState {
@@ -33,33 +29,10 @@ public class GameState {
         for(int i = 0; i < players.length; i++){
             players[i] = new Player("Player_" + (i+1), market.getStartBonePack());
         }
-
-    }
-
-    public List<Bone> getListPlayingField(){
-        return playingField.getPlayingField();
-    }
-
-    public PlayingField getPlayingField(){
-        return playingField;
-    }
-
-    //начинаем игру с поиска первой по приоритету костяшки, выкладываем ее на поле и запоминаем начавшего игрока
-    public void firstMove(){
-        for(int i = 0; i < OrderedBones.size(); i++){
-            Bone bone = OrderedBones.getBone(i);
-            for(int j = 0; j < players.length; j++){
-                if(players[j].isContains(bone)){
-                    activePlayer = j;
-                    playingField.addFirst(players[j].pollBone(bone));
-                    isMoveDone = true;
-                    return;
-                }
-            }
-        }
     }
 
     //если базар не пустой или у игроков есть что положить, значит продолжаем игру
+
     public void checkMove(){
         if(market.size() > 0){
             haveMove = true;
@@ -101,18 +74,6 @@ public class GameState {
         }
     }
 
-    public void game(){
-
-        try {
-            checkMove();
-            while(true) nextMove();
-        }catch (Error error){
-
-        }
-
-    }
-
-
     public void nextMove() throws Error{
 
         if(haveMove && !haveWinner){
@@ -125,6 +86,7 @@ public class GameState {
             nextMove(players[activePlayer]);
             checkMove();
             checkWinner(players[activePlayer]);
+
         }else{
             if(winner == null) checkWinner();
             throw new Error("Хода нет");
@@ -156,6 +118,52 @@ public class GameState {
         player.addBone(market.getBone());
         isMoveDone = false;
     }
+    //начинаем игру с поиска первой по приоритету костяшки, выкладываем ее на поле и запоминаем начавшего игрока
+    public void firstMove(){
+        for(int i = 0; i < OrderedBones.size(); i++){
+            Bone bone = OrderedBones.getBone(i);
+            for(int j = 0; j < players.length; j++){
+                if(players[j].isContains(bone)){
+                    activePlayer = j;
+                    playingField.addFirst(players[j].pollBone(bone));
+                    isMoveDone = true;
+                    return;
+                }
+            }
+        }
+
+    }
+
+    public String getWinnerName(){
+        if(winner == null) checkWinner();
+        return winner.getName();
+    }
+
+    public List<Bone> getPlayingFieldList(){
+        return playingField.getPlayingField();
+    }
+
+    public List<Bone> getMarketList(){
+        return market.getMarketList();
+    }
+
+    //getter and setters
+
+    public int getNumberOfPlayers() {
+        return numberOfPlayers;
+    }
+
+    public void setNumberOfPlayers(int numberOfPlayers) {
+        this.numberOfPlayers = numberOfPlayers;
+    }
+
+    public Market getMarket() {
+        return market;
+    }
+
+    public void setMarket(Market market) {
+        this.market = market;
+    }
 
     public Player[] getPlayers() {
         return players;
@@ -165,9 +173,52 @@ public class GameState {
         this.players = players;
     }
 
-    public String getWinnerName(){
-        if(winner == null) checkWinner();
-        return winner.getName();
+    public PlayingField getPlayingField() {
+        return playingField;
+    }
+
+    public void setPlayingField(PlayingField playingField) {
+        this.playingField = playingField;
+    }
+
+    public int getActivePlayer() {
+        return activePlayer;
+    }
+
+    public void setActivePlayer(int activePlayer) {
+        this.activePlayer = activePlayer;
+    }
+
+    public boolean isHaveMove() {
+        return haveMove;
+    }
+
+    public void setHaveMove(boolean haveMove) {
+        this.haveMove = haveMove;
+    }
+
+    public boolean isMoveDone() {
+        return isMoveDone;
+    }
+
+    public void setMoveDone(boolean moveDone) {
+        isMoveDone = moveDone;
+    }
+
+    public boolean isHaveWinner() {
+        return haveWinner;
+    }
+
+    public void setHaveWinner(boolean haveWinner) {
+        this.haveWinner = haveWinner;
+    }
+
+    public Player getWinner() {
+        return winner;
+    }
+
+    public void setWinner(Player winner) {
+        this.winner = winner;
     }
 
 }
