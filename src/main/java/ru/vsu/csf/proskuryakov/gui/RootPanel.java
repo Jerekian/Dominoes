@@ -5,7 +5,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Separator;
 import javafx.scene.layout.*;
 import ru.vsu.csf.proskuryakov.core.GameState;
-import ru.vsu.csf.proskuryakov.data.Bone;
+import ru.vsu.csf.proskuryakov.data.essence.Bone;
 import ru.vsu.csf.proskuryakov.gui.window.ExitWindow;
 import ru.vsu.csf.proskuryakov.gui.window.InformationWindow;
 
@@ -36,6 +36,7 @@ public class RootPanel{
 
         playingField.setAlignment(Pos.BASELINE_CENTER);
 
+
         market.setAlignment(Pos.BASELINE_CENTER);
 
         VBox topOfCenter = new VBox(playingFieldLable, playingField);
@@ -44,6 +45,9 @@ public class RootPanel{
         VBox bottomOfCenter = new VBox(marketLable,market);
         bottomOfCenter.setAlignment(Pos.CENTER);
 
+        HBox buttonBox = new HBox(GUIApplication.nextMoveButton, GUIApplication.undoButton);
+        buttonBox.setAlignment(Pos.CENTER);
+        buttonBox.setSpacing(25);
 
         center.getChildren().addAll(
                 topOfCenter,
@@ -51,17 +55,14 @@ public class RootPanel{
                 bottomOfCenter
         );
 
-        fillPlayerOneBox(gameState);
-        fillPlayerTwoBox(gameState);
-        fillPlayingField(gameState);
-        fillMarket(gameState);
+        refillAllElement(gameState);
 
         window.setMinSize(400, 200);
         window.setTop(dominoesMenu.getMenuBar());
         window.setLeft(playerOneBox);
         window.setRight(playerTwoBox);
         window.setCenter(center);
-        window.setBottom(new StackPane(GUIApplication.nextMoveButton));
+        window.setBottom(buttonBox);
     }
 
     void fillPlayerOneBox(GameState gameState){
@@ -103,10 +104,12 @@ public class RootPanel{
 
     }
 
-    void nextMoveButton(GameState gameState){
+    public String nextMoveButton(GameState gameState){
+
+        String move = "";
 
         try {
-            gameState.nextMove();
+            move = gameState.nextMove();
         }catch (Error e){
             System.out.println("НЕ МОГУ СЛЕДУЮЩИЙ ХОД СДЕЛАТЬ");
         }
@@ -118,6 +121,7 @@ public class RootPanel{
                     100, 250).display("Победитель: " + gameState.getWinnerName());
         }
 
+        return move;
     }
 
     public void refillAllElement(GameState gameState){

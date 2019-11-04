@@ -1,6 +1,8 @@
 package ru.vsu.csf.proskuryakov.core;
 
 import ru.vsu.csf.proskuryakov.data.*;
+import ru.vsu.csf.proskuryakov.data.essence.Bone;
+import ru.vsu.csf.proskuryakov.data.essence.Player;
 
 import java.util.List;
 
@@ -21,23 +23,6 @@ public class GameState {
         this.market = new Market();
         this.players = new Player[numberOfPlayers];
         this.playingField = new PlayingField();
-    }
-
-    public GameState(int numberOfPlayers, Market market, Player[] players,
-                     PlayingField playingField, int activePlayer, boolean haveMove,
-                     boolean isMoveDone, boolean haveWinner, Player winner) {
-        this.numberOfPlayers = numberOfPlayers;
-        this.market = market;
-        this.players = players;
-        this.playingField = playingField;
-        this.activePlayer = activePlayer;
-        this.haveMove = haveMove;
-        this.isMoveDone = isMoveDone;
-        this.haveWinner = haveWinner;
-        this.winner = winner;
-    }
-
-    public GameState() {
     }
 
     //создаем игроков и заполняем их руки костяшками
@@ -91,7 +76,9 @@ public class GameState {
         }
     }
 
-    public void nextMove() throws Error{
+    public String nextMove() throws Error{
+
+        StringBuilder sb = new StringBuilder();
 
         if(haveMove && !haveWinner){
             if(isMoveDone){
@@ -100,9 +87,12 @@ public class GameState {
                 isMoveDone = false;
             }
 
-            nextMove(players[activePlayer]);
+            sb.append("Игрок "); sb.append(players[activePlayer].getName()); sb.append(" ");
+
+            sb.append(nextMove(players[activePlayer]));
             checkMove();
             checkWinner(players[activePlayer]);
+            return sb.toString();
 
         }else{
             if(winner == null) checkWinner();
@@ -111,29 +101,31 @@ public class GameState {
 
     }
 
-    private void nextMove(Player player){
+    private String nextMove(Player player){
         Bone bone = player.boneSearch(playingField.getLast().getPipsOnSecondHalf());
         if (bone != null) {
             playingField.addLast(bone);
             isMoveDone = true;
-            return;
+            return "Положил на поле " + bone.toString();
         }
 
         bone = player.boneSearch(playingField.getFirst().getPipsOnFirstHalf());
         if (bone != null){
             playingField.addFirst(bone);
             isMoveDone = true;
-            return;
+            return "Положил на поле " + bone.toString();
         }
 
         if(market.size() == 0){
             haveMove = false;
             isMoveDone = false;
-            return;
+            return "Не смог сделать ход ";
         }
 
-        player.addBone(market.getBone());
+        bone = market.getBone();
+        player.addBone(bone);
         isMoveDone = false;
+        return "Взял из базара " + bone.toString();
     }
     //начинаем игру с поиска первой по приоритету костяшки, выкладываем ее на поле и запоминаем начавшего игрока
     public void firstMove(){
@@ -166,76 +158,58 @@ public class GameState {
 
     //getter and setters
 
-    public int getNumberOfPlayers() {
-        return numberOfPlayers;
-    }
-
-    public void setNumberOfPlayers(int numberOfPlayers) {
-        this.numberOfPlayers = numberOfPlayers;
-    }
-
-    public Market getMarket() {
-        return market;
-    }
-
-    public void setMarket(Market market) {
-        this.market = market;
-    }
-
     public Player[] getPlayers() {
         return players;
-    }
-
-    public void setPlayers(Player[] players) {
-        this.players = players;
-    }
-
-    public PlayingField getPlayingField() {
-        return playingField;
-    }
-
-    public void setPlayingField(PlayingField playingField) {
-        this.playingField = playingField;
-    }
-
-    public int getActivePlayer() {
-        return activePlayer;
-    }
-
-    public void setActivePlayer(int activePlayer) {
-        this.activePlayer = activePlayer;
-    }
-
-    public boolean isHaveMove() {
-        return haveMove;
-    }
-
-    public void setHaveMove(boolean haveMove) {
-        this.haveMove = haveMove;
-    }
-
-    public boolean isMoveDone() {
-        return isMoveDone;
-    }
-
-    public void setMoveDone(boolean moveDone) {
-        isMoveDone = moveDone;
     }
 
     public boolean isHaveWinner() {
         return haveWinner;
     }
 
-    public void setHaveWinner(boolean haveWinner) {
-        this.haveWinner = haveWinner;
+    public class Snapshot{
+
+        private int numberOfPlayers;
+        private Market market;
+        private Player[] players;
+        private PlayingField playingField;
+        private int activePlayer = -1;
+        private boolean haveMove;
+        private boolean isMoveDone;
+        private boolean haveWinner = false;
+        private Player winner = null;
+
+        public Snapshot(int numberOfPlayers, Market market, Player[] players,
+                        PlayingField playingField, int activePlayer, boolean haveMove,
+                        boolean isMoveDone, boolean haveWinner, Player winner) {
+            this.numberOfPlayers = numberOfPlayers;
+            this.market = market;
+            this.players = players;
+            this.playingField = playingField;
+            this.activePlayer = activePlayer;
+            this.haveMove = haveMove;
+            this.isMoveDone = isMoveDone;
+            this.haveWinner = haveWinner;
+            this.winner = winner;
+        }
+
     }
 
-    public Player getWinner() {
-        return winner;
+    public Snapshot getSnapshot(){
+        return new Snapshot(numberOfPlayers, market, players, playingField,
+                activePlayer, haveMove, isMoveDone, haveWinner, winner);
     }
 
-    public void setWinner(Player winner) {
-        this.winner = winner;
+
+    public void setSnapshot(Snapshot snapshot){
+        this.numberOfPlayers = snapshot.numberOfPlayers;
+        this.market = snapshot.market;
+        this.players = snapshot.players;
+        this.playingField = snapshot.playingField;
+        this.activePlayer = snapshot.activePlayer;
+        this.haveMove = snapshot.haveMove;
+        this.isMoveDone = snapshot.isMoveDone;
+        this.haveWinner = snapshot.haveWinner;
+        this.winner = snapshot.winner;
     }
 
 }

@@ -26,4 +26,9 @@ public class Window {
         window.setMinWidth(minWidth);
     }
 
+    public void setMaxSize(double maxHeight, double maxWidth){
+        window.setMaxHeight(maxHeight);
+        window.setMaxWidth(maxWidth);
+    }
+
 }

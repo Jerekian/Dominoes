@@ -21,7 +21,13 @@ public class DominoesMenu {
 
         settingMenu.getItems().addAll(numberOfPlayersMenu);
 
-        menuBar.getMenus().addAll(gameMenu, settingMenu);
+        Menu commands = new Menu("Commands");
+        MenuItem undoMenuItem = new MenuItem("Undo");
+        undoMenuItem.setOnAction(e -> GUIApplication.undo());
+
+        commands.getItems().add(undoMenuItem);
+
+        menuBar.getMenus().addAll(gameMenu, settingMenu, commands);
 
     }
 

@@ -6,6 +6,9 @@ import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.stage.Stage;
+import ru.vsu.csf.proskuryakov.data.command.Command;
+import ru.vsu.csf.proskuryakov.data.command.CommandHistory;
+import ru.vsu.csf.proskuryakov.data.command.NextMoveCommand;
 import ru.vsu.csf.proskuryakov.core.GameState;
 
 import java.io.FileWriter;
@@ -21,13 +24,19 @@ public class GUIApplication extends Application {
     static GameState gameState;
 
     static Button nextMoveButton = new Button("Next move");
+    static Button undoButton = new Button("Undo");
+
+    static CommandHistory commandHistory = new CommandHistory();
 
     public static void main(String[] args) {
 
         startNewGame();
 
-        nextMoveButton.setOnAction(e -> rootPanel.nextMoveButton(gameState));
-
+        //nextMoveButton.setOnAction(e -> rootPanel.nextMoveButton(gameState));
+        //nextMoveButton.setOnAction(e -> executeCommand(new NextMoveCommand(gameState, rootPanel)));
+        nextMoveButton.setMinSize(100, 50);
+        undoButton.setOnAction(e -> undo());
+        undoButton.setMinSize(100, 50);
         rootPanel = new RootPanel(gameState);
 
         scene = new Scene(rootPanel.window);
@@ -43,6 +52,8 @@ public class GUIApplication extends Application {
         gameState.firstMove();
 
         gameState.checkMove();
+
+        commandHistory = new CommandHistory();
 
         if(rootPanel != null){
             rootPanel.refillAllElement(gameState);
@@ -73,15 +84,6 @@ public class GUIApplication extends Application {
 
         String jsonGameState = gson.toJson(gameState);
 
-//        Gson gson = new GsonBuilder()
-//                .setPrettyPrinting()
-//                .registerTypeAdapter(GameState.class, new GameStateSerializer())
-//                .create();
-//
-//        String jsonGameState = gson.toJson(gameState);
-//
-
-
         try(FileWriter writer = new FileWriter("jsonGameState.json", false))
         {
             writer.write(jsonGameState);
@@ -100,18 +102,36 @@ public class GUIApplication extends Application {
             System.out.println(e);
         }
 
-//        Gson gson = new GsonBuilder()
-//                .registerTypeAdapter(GameState.class, new GameStateDeserializer())
-//                .create();
-//
         Gson gson = new GsonBuilder().create();
 
         gameState = gson.fromJson(jsonGameState, GameState.class);
 
+        commandHistory = new CommandHistory();
+
         rootPanel.refillAllElement(gameState);
     }
 
+    public static void undo(){
 
+        if(commandHistory.isEmpty()){
+            System.out.println("История пуста");
+            return;
+        }
 
+        Command command = commandHistory.pop();
+        if(command != null){
+            command.undo();
+            gameState = command.getGameState();
+            rootPanel.refillAllElement(gameState);
+            System.out.println("Отмена команды: \"" + command.getCommandDescriptione() + "\"" );
+        }
+
+    }
+
+    public static void executeCommand(Command command) {
+        if (command.execute()) {
+            commandHistory.push(command);
+        }
+    }
 
 }

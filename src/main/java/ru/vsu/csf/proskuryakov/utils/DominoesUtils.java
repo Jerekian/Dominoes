@@ -8,8 +8,8 @@ package ru.vsu.csf.proskuryakov.utils;
              по ним ищем у кого самая приоритетная и даем тому преимущество в ходу
  */
 
-import ru.vsu.csf.proskuryakov.data.Bone;
-import ru.vsu.csf.proskuryakov.data.BoneNumbers;
+import ru.vsu.csf.proskuryakov.data.essence.Bone;
+import ru.vsu.csf.proskuryakov.data.essence.BoneNumbers;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package ru.vsu.csf.proskuryakov.data;
+package ru.vsu.csf.proskuryakov.data.essence;
 
 import java.util.LinkedList;
 import java.util.List;

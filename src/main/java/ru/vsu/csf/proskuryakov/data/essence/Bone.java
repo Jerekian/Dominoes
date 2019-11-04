@@ -1,4 +1,4 @@
-package ru.vsu.csf.proskuryakov.data;
+package ru.vsu.csf.proskuryakov.data.essence;
 /*
 класс описывающий одну костяшку
  */

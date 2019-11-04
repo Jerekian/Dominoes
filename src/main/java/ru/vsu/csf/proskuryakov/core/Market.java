@@ -1,6 +1,6 @@
 package ru.vsu.csf.proskuryakov.core;
 
-import ru.vsu.csf.proskuryakov.data.Bone;
+import ru.vsu.csf.proskuryakov.data.essence.Bone;
 import ru.vsu.csf.proskuryakov.data.OrderedBones;
 
 import java.util.LinkedList;
