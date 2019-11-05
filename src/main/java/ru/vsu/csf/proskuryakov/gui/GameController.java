@@ -3,11 +3,16 @@ package ru.vsu.csf.proskuryakov.gui;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import ru.vsu.csf.proskuryakov.core.GameState;
+import ru.vsu.csf.proskuryakov.core.Market;
+import ru.vsu.csf.proskuryakov.core.PlayingField;
 import ru.vsu.csf.proskuryakov.data.command.Command;
 import ru.vsu.csf.proskuryakov.data.command.NextMoveCommand;
+import ru.vsu.csf.proskuryakov.data.essence.Bone;
 import ru.vsu.csf.proskuryakov.gui.controllers.Game;
 import ru.vsu.csf.proskuryakov.gui.window.ExitWindow;
 import ru.vsu.csf.proskuryakov.gui.window.InformationWindow;
+import ru.vsu.csf.proskuryakov.json.Deserializer;
+import ru.vsu.csf.proskuryakov.json.Serializer;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -15,6 +20,7 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.LinkedList;
 
 public class GameController {
 
@@ -71,6 +77,10 @@ public class GameController {
 
         Gson gson = new GsonBuilder()
                 .setPrettyPrinting()
+                .registerTypeAdapter(Bone.class, new Serializer.BoneSerializer())
+                .registerTypeAdapter(PlayingField.class, new Serializer.PlayingFieldSerializer())
+                .registerTypeAdapter(Market.class, new Serializer.MarketSerializer())
+                .registerTypeAdapter(GameState.class, new Serializer.GameStateSerializer())
                 .create();
 
         String jsonGameState = gson.toJson(gameState);
@@ -96,7 +106,12 @@ public class GameController {
             System.out.println(e);
         }
 
-        Gson gson = new GsonBuilder().create();
+        Gson gson = new GsonBuilder()
+                .registerTypeAdapter(Bone.class, new Deserializer.BoneDeserializer())
+                .registerTypeAdapter(LinkedList.class, new Deserializer.PlayingFieldDeserializer())
+                .registerTypeAdapter(LinkedList.class, new Deserializer.MarketDeserializer())
+                .registerTypeAdapter(GameState.class, new Deserializer.GameStateDeserializer())
+                .create();
 
         return gson.fromJson(jsonGameState, GameState.class);
 

@@ -25,6 +25,9 @@ public class GameState {
         this.playingField = new PlayingField();
     }
 
+    public GameState() {
+    }
+
     //создаем игроков и заполняем их руки костяшками
     public void startGame(){
 
@@ -156,60 +159,86 @@ public class GameState {
         return market.getMarketList();
     }
 
+    public void setPlayingFieldList(List<Bone> playingFieldList){
+        playingField = new PlayingField(playingFieldList);
+    }
+
+    public void setMarketList(List<Bone> marketList){
+        market = new Market(marketList);
+    }
+
     //getter and setters
+
+
+    public int getNumberOfPlayers() {
+        return numberOfPlayers;
+    }
+
+    public void setNumberOfPlayers(int numberOfPlayers) {
+        this.numberOfPlayers = numberOfPlayers;
+    }
+
+    public Market getMarket() {
+        return market;
+    }
+
+    public void setMarket(Market market) {
+        this.market = market;
+    }
 
     public Player[] getPlayers() {
         return players;
+    }
+
+    public void setPlayers(Player[] players) {
+        this.players = players;
+    }
+
+    public PlayingField getPlayingField() {
+        return playingField;
+    }
+
+    public void setPlayingField(PlayingField playingField) {
+        this.playingField = playingField;
+    }
+
+    public int getActivePlayer() {
+        return activePlayer;
+    }
+
+    public void setActivePlayer(int activePlayer) {
+        this.activePlayer = activePlayer;
+    }
+
+    public boolean isHaveMove() {
+        return haveMove;
+    }
+
+    public void setHaveMove(boolean haveMove) {
+        this.haveMove = haveMove;
+    }
+
+    public boolean isMoveDone() {
+        return isMoveDone;
+    }
+
+    public void setMoveDone(boolean moveDone) {
+        isMoveDone = moveDone;
     }
 
     public boolean isHaveWinner() {
         return haveWinner;
     }
 
-    public class Snapshot{
-
-        private int numberOfPlayers;
-        private Market market;
-        private Player[] players;
-        private PlayingField playingField;
-        private int activePlayer = -1;
-        private boolean haveMove;
-        private boolean isMoveDone;
-        private boolean haveWinner = false;
-        private Player winner = null;
-
-        public Snapshot(int numberOfPlayers, Market market, Player[] players,
-                        PlayingField playingField, int activePlayer, boolean haveMove,
-                        boolean isMoveDone, boolean haveWinner, Player winner) {
-            this.numberOfPlayers = numberOfPlayers;
-            this.market = market;
-            this.players = players;
-            this.playingField = playingField;
-            this.activePlayer = activePlayer;
-            this.haveMove = haveMove;
-            this.isMoveDone = isMoveDone;
-            this.haveWinner = haveWinner;
-            this.winner = winner;
-        }
-
+    public void setHaveWinner(boolean haveWinner) {
+        this.haveWinner = haveWinner;
     }
 
-    public Snapshot getSnapshot(){
-        return new Snapshot(numberOfPlayers, market, players, playingField,
-                activePlayer, haveMove, isMoveDone, haveWinner, winner);
+    public Player getWinner() {
+        return winner;
     }
 
-
-    public void setSnapshot(Snapshot snapshot){
-        this.numberOfPlayers = snapshot.numberOfPlayers;
-        this.market = snapshot.market;
-        this.players = snapshot.players;
-        this.playingField = snapshot.playingField;
-        this.activePlayer = snapshot.activePlayer;
-        this.haveMove = snapshot.haveMove;
-        this.isMoveDone = snapshot.isMoveDone;
-        this.haveWinner = snapshot.haveWinner;
-        this.winner = snapshot.winner;
+    public void setWinner(Player winner) {
+        this.winner = winner;
     }
-
 }

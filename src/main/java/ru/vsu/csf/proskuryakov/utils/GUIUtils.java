@@ -29,16 +29,17 @@ public class GUIUtils {
 
     public static List<Node> getDrawBoneList(List<Bone> playerBone){
         List<Node> nodeList = new ArrayList<>();
-
-        for(Bone bone: playerBone){
-            HBox hBox = new HBox();
-            hBox.setSpacing(0);
-            hBox.getChildren().clear();
-            hBox.getChildren().addAll(
-                    getHalfBoneImageView(bone.getPipsOnFirstHalf()),
-                    getHalfBoneImageView(bone.getPipsOnSecondHalf())
-            );
-            nodeList.add(hBox);
+        if(!playerBone.isEmpty()){
+            for(Bone bone: playerBone){
+                HBox hBox = new HBox();
+                hBox.setSpacing(0);
+                hBox.getChildren().clear();
+                hBox.getChildren().addAll(
+                        getHalfBoneImageView(bone.getPipsOnFirstHalf()),
+                        getHalfBoneImageView(bone.getPipsOnSecondHalf())
+                );
+                nodeList.add(hBox);
+            }
         }
         return nodeList;
     }

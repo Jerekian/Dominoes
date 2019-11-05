@@ -18,6 +18,10 @@ public class Market{
         randomSort();
     }
 
+    public Market(List<Bone> market) {
+        this.market = new LinkedList<>(market);
+    }
+
     public Bone getRandomBone(){
         int index = rnd.nextInt(market.size());
         Bone bone = market.get(index);
@@ -60,5 +64,7 @@ public class Market{
     public void randomSort(){
         market.sort((a, b) -> rnd.nextInt(2)*2-1);
     }
+
+
 
 }

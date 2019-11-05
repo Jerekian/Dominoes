@@ -13,6 +13,10 @@ public class PlayingField{
         this.playingField = new LinkedList<>();
     }
 
+    public PlayingField(List<Bone> playingField) {
+        this.playingField = new LinkedList<>(playingField);
+    }
+
     public void addFirst(Bone bone){
         if(playingField.size() == 0 ||
                 bone.getPipsOnSecondHalf() == playingField.getFirst().getPipsOnFirstHalf()){
@@ -42,4 +46,5 @@ public class PlayingField{
     public List<Bone> getPlayingField() {
         return playingField;
     }
+
 }

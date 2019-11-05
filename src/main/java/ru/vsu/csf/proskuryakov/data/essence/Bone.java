@@ -14,6 +14,7 @@ public class Bone {
         this.isDouble = pipsOnFirstHalf == pipsOnSecondHalf;
     }
 
+
     @Override
     public String toString() {
         return "(" + pipsOnFirstHalf +

@@ -2,7 +2,6 @@ package ru.vsu.csf.proskuryakov.data.command;
 
 import com.google.gson.GsonBuilder;
 import ru.vsu.csf.proskuryakov.core.GameState;
-import ru.vsu.csf.proskuryakov.gui.RootPanel;
 
 public abstract class Command{
 
