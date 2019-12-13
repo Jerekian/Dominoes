@@ -17,7 +17,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.vsu.csf.proskuryakov.gui.controllers.Game">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ru.vsu.csf.proskuryakov.dominoes.gui.controllers.Game">
    <children>
       <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <top>
@@ -28,8 +28,8 @@
                     <MenuItem mnemonicParsing="false" onAction="#startNewGame" text="Start new game" />
                         <MenuItem mnemonicParsing="false" text="Restart this game" />
                         <SeparatorMenuItem mnemonicParsing="false" />
-                        <MenuItem mnemonicParsing="false" onAction = "#saveGame" text="Save game state" />
-                        <MenuItem mnemonicParsing="false" onAction = "#openGame" text="Open saved game state" />
+                        <MenuItem mnemonicParsing="false" onAction="#saveGame" text="Save game state" />
+                        <MenuItem mnemonicParsing="false" onAction="#openGame" text="Open saved game state" />
                         <SeparatorMenuItem mnemonicParsing="false" />
                         <MenuItem mnemonicParsing="false" onAction="#exit" text="Exit" />
                   </items>
@@ -62,7 +62,7 @@
                               <Label alignment="CENTER" contentDisplay="CENTER" text="Market" VBox.vgrow="ALWAYS" />
                               <ScrollPane prefHeight="200.0" prefWidth="200.0" vbarPolicy="NEVER" VBox.vgrow="ALWAYS">
                                  <content>
-                                    <HBox fx:id="market" prefHeight="75.0" prefWidth="400.0" spacing="10.0" />
+                                    <HBox fx:id="marketBox" prefHeight="75.0" prefWidth="400.0" spacing="10.0" />
                                  </content>
                               </ScrollPane>
                            </children>
@@ -75,7 +75,7 @@
                           <items>
                             <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="416.0" prefWidth="150.0">
                                  <children>
-                                    <SplitPane dividerPositions="0.5" layoutX="6.0" layoutY="14.0" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <SplitPane fx:id="leftSplitPane" dividerPositions="0.5" layoutX="6.0" layoutY="14.0" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                       <items>
                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                              <children>
@@ -136,7 +136,7 @@
                                           <Label text="Playing field" />
                                           <ScrollPane prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                                              <content>
-                                                <HBox fx:id="playingField" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="100.0" spacing="10.0" />
+                                                <HBox fx:id="playingFieldBox" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="100.0" prefWidth="100.0" spacing="10.0" />
                                              </content>
                                           </ScrollPane>
                                        </children>
@@ -145,7 +145,7 @@
                               </AnchorPane>
                               <AnchorPane prefHeight="200.0" prefWidth="150.0">
                                  <children>
-                                    <SplitPane dividerPositions="0.5" layoutX="6.0" layoutY="80.0" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                                    <SplitPane fx:id="rightSplitPane" dividerPositions="0.5" layoutX="6.0" layoutY="80.0" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                                       <items>
                                         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                              <children>
